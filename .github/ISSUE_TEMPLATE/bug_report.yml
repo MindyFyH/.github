@@ -1,0 +1,46 @@
+name: Reporte de bug
+description: Reporta un comportamiento inesperado o un error en el proyecto.
+title: "[bug]: "
+labels: ["bug", "pendiente de triaje"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por tomarte el tiempo de reportar un bug. Completa la información a continuación con el mayor detalle posible.
+
+  - type: textarea
+    id: descripcion
+    attributes:
+      label: Descripción del problema
+      description: Una descripción clara y concisa del bug.
+      placeholder: ¿Qué ocurre? ¿Qué esperabas que ocurriera?
+    validations:
+      required: true
+
+  - type: textarea
+    id: pasos
+    attributes:
+      label: Pasos para reproducir
+      description: Describe los pasos exactos para reproducir el problema.
+      placeholder: |
+        1. Ir a '...'
+        2. Hacer clic en '...'
+        3. Ver el error
+    validations:
+      required: true
+
+  - type: textarea
+    id: comportamiento-esperado
+    attributes:
+      label: Comportamiento esperado
+      description: ¿Qué debería haber pasado?
+    validations:
+      required: true
+
+  - type: textarea
+    id: contexto
+    attributes:
+      label: Contexto adicional
+      description: Versión del proyecto, sistema operativo, capturas de pantalla, logs relevantes, etc.
+    validations:
+      required: false

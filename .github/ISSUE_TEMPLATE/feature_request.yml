@@ -1,0 +1,42 @@
+name: Solicitud de funcionalidad
+description: Propone una nueva funcionalidad o mejora para el proyecto.
+title: "[feat]: "
+labels: ["mejora", "pendiente de triaje"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ¿Tienes una idea para mejorar el proyecto? Cuéntanos más.
+
+  - type: textarea
+    id: problema
+    attributes:
+      label: ¿Qué problema resuelve?
+      description: Describe el problema o la necesidad que motiva esta solicitud.
+      placeholder: Me resulta frustrante cuando...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solucion
+    attributes:
+      label: Solución propuesta
+      description: Describe la funcionalidad que te gustaría ver implementada.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: Alternativas consideradas
+      description: ¿Exploraste otras soluciones o enfoques? ¿Por qué los descartaste?
+    validations:
+      required: false
+
+  - type: textarea
+    id: contexto
+    attributes:
+      label: Contexto adicional
+      description: Mockups, referencias, ejemplos de otros proyectos, etc.
+    validations:
+      required: false
