@@ -1,0 +1,89 @@
+name: 🚀 Pasar a producción
+description: Checklist antes de que este proyecto quede disponible en su dominio público.
+title: "[go-live]: pasar a producción"
+labels: ["go-live"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Abre este issue **antes** de publicar el proyecto en su dominio de
+        `.lorenalorena.com`. Ve marcando cada casilla a medida que la cumples.
+        No cierres el issue hasta que estén todas.
+
+        En estos proyectos, mergear a `main` ya despliega a producción en Vercel.
+        Publicar significa además conectar el dominio y abrir el acceso.
+
+        **Este proyecto maneja datos de contabilidad y finanzas.** El acceso y
+        el manejo de datos se revisan con más cuidado que en el resto: las
+        secciones de acceso y de dinero no son opcionales.
+
+  - type: input
+    id: proyecto
+    attributes:
+      label: Proyecto
+      placeholder: contable-chile
+    validations:
+      required: true
+
+  - type: input
+    id: dominio
+    attributes:
+      label: Dominio que va a usar
+      placeholder: contable.lorenalorena.com
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: codigo
+    attributes:
+      label: Código
+      options:
+        - label: El CI está verde en `main` (seguridad y tests)
+        - label: Los tests cubren los cálculos de dinero, con casos borde (cero, negativos, montos que caen en la mitad de un redondeo)
+        - label: Hay un test de cuadratura donde débitos igual a créditos
+        - label: No se usa punto flotante para montos en ningún cálculo
+        - label: El `CHANGELOG.md` refleja lo que va en esta primera versión
+
+  - type: checkboxes
+    id: dominio-acceso
+    attributes:
+      label: Dominio y acceso
+      description: >
+        La protección de Vercel (SSO) cubre los previews pero NO el dominio
+        propio. En un proyecto financiero el acceso al dominio de producción NO
+        puede quedar solo con el usuario/clave de la aplicación.
+      options:
+        - label: El subdominio `.lorenalorena.com` está creado y apunta al proyecto
+        - label: El dominio resuelve por HTTPS con certificado válido
+        - label: Hay una capa de Cloudflare Access sobre el dominio, con login aparte del usuario/clave de la plataforma
+        - label: La lista de quién puede entrar por Cloudflare Access está definida y es solo quien corresponde
+        - label: Se probó entrar sin autenticar y el acceso queda bloqueado
+
+  - type: checkboxes
+    id: dinero-datos
+    attributes:
+      label: Dinero y datos
+      options:
+        - label: Supabase de producción tiene RLS activo en todas las tablas
+        - label: Se probó con dos clientes distintos que uno no ve los datos del otro
+        - label: No hay datos reales de clientes en el repositorio ni en los tests (los fixtures son sintéticos)
+        - label: Las variables de entorno de producción apuntan a la base de producción, no a la de desarrollo
+        - label: Las migraciones de Supabase están aplicadas en producción
+
+  - type: checkboxes
+    id: observabilidad
+    attributes:
+      label: Después de publicar
+      options:
+        - label: Revisé los logs de Vercel del primer deploy de producción y no hay errores
+        - label: Revisé los logs de Supabase y no hay consultas fallando ni permisos denegados inesperados
+        - label: Hice el flujo principal de punta a punta en el dominio real, con una cuenta de prueba
+        - label: Verifiqué que un cálculo o informe conocido da el resultado correcto en producción
+
+  - type: textarea
+    id: notas
+    attributes:
+      label: Notas
+      description: Decisiones tomadas o pendientes que quedan para después.
+    validations:
+      required: false
