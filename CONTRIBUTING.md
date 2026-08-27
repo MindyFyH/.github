@@ -120,6 +120,17 @@ git config core.hooksPath .githooks
 Y si el escaneo marca algo, **no lo silencies para que pase**: confirma primero
 si es real.
 
+## Documentación
+
+Toda la documentación del proyecto vive en el directorio `docs/` de la raíz del
+repositorio, y se escribe en Markdown (`.md`). No se dejan documentos sueltos en
+la raíz ni repartidos por otras carpetas: si es documentación, va en `docs/`.
+
+El `README.md` es la excepción: se queda en la raíz, porque es lo primero que se
+ve al abrir el repositorio. Todo lo demás —guías, notas técnicas, decisiones,
+instrucciones de setup— va en `docs/`, con nombre en minúsculas y palabras
+unidas por guiones (`docs/deploy-a-staging.md`, no `docs/Deploy Staging.md`).
+
 ## Registro de cambios
 
 Cada repositorio tiene un `CHANGELOG.md`. Si tu cambio altera cómo se comporta
