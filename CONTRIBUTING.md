@@ -120,6 +120,60 @@ git config core.hooksPath .githooks
 Y si el escaneo marca algo, **no lo silencies para que pase**: confirma primero
 si es real.
 
+## Gestor de paquetes
+
+**pnpm es el estándar** en los proyectos de JavaScript y TypeScript. Los
+repositorios nuevos arrancan con pnpm.
+
+**npm queda como legacy.** Lo usan la mayoría de los repositorios y no se migran
+por ahora: si el repositorio ya tiene `package-lock.json` y funciona, se queda
+así. Lo que no se hace es empezar algo nuevo con npm.
+
+**yarn no se usa.** No hay ningún repositorio con `yarn.lock` en la organización
+y no se adopta. Si llega uno transferido desde afuera, se migra antes de
+integrarlo:
+
+```bash
+rm yarn.lock && pnpm import && pnpm install
+```
+
+### Un solo lockfile por repositorio
+
+Nunca conviven dos. Es el error que más cuesta ver, porque no rompe nada de
+inmediato: el CI elige uno, instala un árbol de dependencias distinto al que
+tienes local, y la diferencia aparece semanas después como un bug que no
+reproduce nadie.
+
+Ya pasó: un repositorio de la organización tenía `pnpm-lock.yaml` y
+`package-lock.json` al mismo tiempo, y el CI instalaba con el equivocado.
+
+Si migras de npm a pnpm, el `package-lock.json` se borra en el mismo commit:
+
+```bash
+rm package-lock.json && pnpm import && pnpm install
+```
+
+`pnpm import` lee el lockfile viejo antes de borrarlo, así que las versiones
+exactas que tenías se conservan.
+
+### Por qué importa, más allá del gusto
+
+Los pines de seguridad viven en el gestor. En pnpm son `pnpm.overrides`, en npm
+`overrides`, en yarn `resolutions`: tres sintaxis para lo mismo. Cuando sale un
+CVE y hay que fijar una versión transitiva, con un solo gestor hay un solo lugar
+donde buscar en todos los repositorios.
+
+Esto no es teórico. `mindyv2` tiene 17 pines de CVE en `pnpm.overrides`, y el CI
+los estaba ignorando porque instalaba con npm: probaba un árbol sin parchar. El
+piso de seguridad descartando los parches de seguridad.
+
+Conviene además declarar la versión en el `package.json`, para que el CI y cada
+máquina usen la misma:
+
+```json
+"packageManager": "pnpm@10.0.0"
+```
+
 ## Documentación
 
 Toda la documentación del proyecto vive en el directorio `docs/` de la raíz del
