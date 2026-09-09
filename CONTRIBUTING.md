@@ -174,6 +174,32 @@ máquina usen la misma:
 "packageManager": "pnpm@10.0.0"
 ```
 
+## Tratamiento de datos personales
+
+Cada repositorio lleva un `docs/tratamiento-de-datos.md`: la ficha de qué datos
+de personas toca ese código, para qué, con qué base de licitud, quién más los
+ve, si salen del país, cuánto se guardan y cómo se protegen.
+
+Lo exige la **Ley 21.719**, vigente desde diciembre de 2026. El registro formal
+es de la compañía, pero esta ficha solo la puede llenar quien escribe el código:
+la región de un proyecto Supabase, una integración nueva o una tabla con RUT no
+se adivinan desde afuera.
+
+**Se actualiza en el mismo pull request que introduce el cambio**, igual que el
+`CHANGELOG.md`. Concretamente, cuando el cambio agrega un dato personal nuevo,
+un proveedor externo que lo recibe, o una integración que lo mueve.
+
+Si el proyecto no trata datos de personas, se escribe eso en el archivo, en una
+línea, con el motivo. La ausencia declarada vale; la silenciosa no se puede
+auditar.
+
+Dos secciones concentran los errores más caros. La de **transferencias
+internacionales**, porque un proyecto en Vercel con base en Supabase casi
+siempre tiene los datos fuera de Chile sin que nadie lo haya decidido a
+propósito. Y la de **datos sensibles** —salud, datos de niños, biométricos—,
+porque cambian las reglas: exigen consentimiento reforzado y obligan a avisarle
+al titular si hay una brecha.
+
 ## Documentación
 
 Toda la documentación del proyecto vive en el directorio `docs/` de la raíz del
